@@ -185,6 +185,7 @@ export const SITE_METADATA = {
   title: "Developer | Oleksii Chermalykh",
   description: "developer portfolio",
   author: "Oleksii Chermalykh",
+  url: "https://github.com/gh0styx",
   image: "/og-image.jpg",
 };
 
