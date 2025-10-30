@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
+import GhostLogo from "./GhostLogo";
 import { NAVIGATION_ITEMS, NAVIGATION_CONFIG } from "@/lib/constants";
 
 export default function Navigation() {
@@ -42,9 +43,12 @@ export default function Navigation() {
               e.preventDefault();
               handleNavClick("#hero");
             }}
-            className="text-xl font-bold text-foreground p-3 -m-3 hover:bg-accent rounded-lg transition-colors"
+            className="flex items-center gap-2 text-xl font-bold text-foreground p-3 -m-3 hover:bg-accent rounded-lg transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}>
+            <div className="w-6 h-6 text-foreground flex items-center justify-center">
+              <GhostLogo className="w-full h-full" />
+            </div>
             gh0sty.dev
           </motion.a>
 
