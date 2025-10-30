@@ -182,10 +182,9 @@ export const CONTACT_DATA = {
 
 // Метаданные
 export const SITE_METADATA = {
-  title: "Portfolio | Developer",
-  description: "Портфолио разработчика",
-  author: "Your Name",
-  url: "https://yourportfolio.com",
+  title: "Developer | Oleksii Chermalykh",
+  description: "developer portfolio",
+  author: "Oleksii Chermalykh",
   image: "/og-image.jpg",
 };
 

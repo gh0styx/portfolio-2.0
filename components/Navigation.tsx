@@ -59,7 +59,8 @@ export default function Navigation() {
                   handleNavClick(item.href);
                 }}
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-                whileHover={{ y: -2 }}>
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.98 }}>
                 {item.name}
               </motion.a>
             ))}
@@ -89,14 +90,15 @@ export default function Navigation() {
       <motion.div
         initial={false}
         animate={{
-          height: isMobileMenuOpen ? "auto" : 0,
+          scaleY: isMobileMenuOpen ? 1 : 0,
           opacity: isMobileMenuOpen ? 1 : 0,
         }}
+        style={{ originY: 0 }}
         transition={{
           duration: 0.3,
           ease: "easeInOut",
         }}
-        className={`max-lg:block lg:hidden overflow-hidden bg-background backdrop-blur-xl shadow-xl absolute top-full left-0 right-0 z-60 ${
+        className={`max-lg:block lg:hidden overflow-hidden bg-background backdrop-blur-xl shadow-xl absolute top-full left-0 right-0 z-60 will-change-transform ${
           isMobileMenuOpen ? "pointer-events-auto" : "pointer-events-none"
         }`}>
         <div className="container mx-auto px-4 py-6">
@@ -120,7 +122,8 @@ export default function Navigation() {
                   duration: 0.3,
                   delay: isMobileMenuOpen ? index * 0.1 : 0,
                 }}
-                whileHover={{ x: 4 }}>
+                whileHover={{ x: 4 }}
+                whileTap={{ scale: 0.98 }}>
                 <span className="flex items-center gap-3">
                   <span className="w-2 h-2 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                   {item.name}

@@ -8,6 +8,7 @@ import { CONTACT_DATA, ANIMATION_CONFIG } from "@/lib/constants";
 
 export default function Contact() {
   const ref = useRef(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [formData, setFormData] = useState({
     name: "",
@@ -48,7 +49,7 @@ export default function Contact() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -58,29 +59,8 @@ export default function Contact() {
     setIsSubmitting(true);
     setSubmitStatus("idle");
 
-    try {
-      // Using EmailJS for email sending
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        setSubmitStatus("success");
-        setFormData({ name: "", email: "", message: "" });
-        setErrors({});
-      } else {
-        setSubmitStatus("error");
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      setSubmitStatus("error");
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Native submit for Vercel Forms
+    formRef.current?.submit();
   };
 
   const handleChange = (
@@ -148,7 +128,24 @@ export default function Contact() {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form
+              ref={formRef}
+              onSubmit={handleSubmit}
+              action="/?submitted=true"
+              method="POST"
+              data-vercel="true"
+              data-vercel-honeypot="bot-field"
+              className="space-y-6">
+              {/* Vercel Forms: form name and honeypot */}
+              <input type="hidden" name="formName" value="contact" />
+              <input
+                type="text"
+                name="bot-field"
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden"
+                aria-hidden="true"
+              />
               <div>
                 <label
                   htmlFor="name"
