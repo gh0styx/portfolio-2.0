@@ -67,9 +67,9 @@ export default function Contact() {
       }
       const formDataToSend = new FormData(formElement);
 
-      // POST to the same route – Vercel Forms will capture it (data-vercel="true")
-      const response = await fetch("/", {
+      const response = await fetch("https://formspree.io/f/mzzkajyo", {
         method: "POST",
+        headers: { Accept: "application/json" },
         body: formDataToSend,
       });
 
