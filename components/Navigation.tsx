@@ -77,9 +77,9 @@ export default function Navigation() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}>
               {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
+                <X className="w-6 h-6 text-foreground" />
               ) : (
-                <Menu className="w-6 h-6" />
+                <Menu className="w-6 h-6 text-foreground" />
               )}
             </motion.button>
           </div>
@@ -96,7 +96,7 @@ export default function Navigation() {
           duration: 0.3,
           ease: "easeInOut",
         }}
-        className={`max-lg:block lg:hidden overflow-hidden bg-background backdrop-blur-xl shadow-xl absolute top-full left-0 right-0 z-[60] ${
+        className={`max-lg:block lg:hidden overflow-hidden bg-background backdrop-blur-xl shadow-xl absolute top-full left-0 right-0 z-60 ${
           isMobileMenuOpen ? "pointer-events-auto" : "pointer-events-none"
         }`}>
         <div className="container mx-auto px-4 py-6">
