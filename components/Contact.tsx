@@ -20,6 +20,7 @@ export default function Contact() {
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle");
+  const [showModal, setShowModal] = useState(false);
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
@@ -49,7 +50,7 @@ export default function Contact() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -59,8 +60,34 @@ export default function Contact() {
     setIsSubmitting(true);
     setSubmitStatus("idle");
 
-    // Native submit for Vercel Forms
-    formRef.current?.submit();
+    try {
+      const formElement = formRef.current;
+      if (!formElement) {
+        throw new Error("Form not found");
+      }
+      const formDataToSend = new FormData(formElement);
+
+      // POST to the same route – Vercel Forms will capture it (data-vercel="true")
+      const response = await fetch("/", {
+        method: "POST",
+        body: formDataToSend,
+      });
+
+      if (response.ok) {
+        setSubmitStatus("success");
+        setFormData({ name: "", email: "", message: "" });
+        setErrors({});
+        setShowModal(true);
+        // auto-close modal after 4s
+        setTimeout(() => setShowModal(false), 4000);
+      } else {
+        setSubmitStatus("error");
+      }
+    } catch {
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -115,12 +142,6 @@ export default function Contact() {
             <h3 className="text-2xl font-bold mb-6">Send me a message</h3>
 
             {/* Status Messages */}
-            {submitStatus === "success" && (
-              <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-600">
-                ✅ Message sent successfully! I'll get back to you soon.
-              </div>
-            )}
-
             {submitStatus === "error" && (
               <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-600">
                 ❌ Failed to send message. Please try again or contact me
@@ -131,7 +152,7 @@ export default function Contact() {
             <form
               ref={formRef}
               onSubmit={handleSubmit}
-              action="/?submitted=true"
+              // stay on page; Vercel Forms captures POST
               method="POST"
               data-vercel="true"
               data-vercel-honeypot="bot-field"
@@ -231,6 +252,34 @@ export default function Contact() {
                 )}
               </motion.button>
             </form>
+            {/* Success Modal */}
+            {showModal && (
+              <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
+                <div
+                  className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+                  onClick={() => setShowModal(false)}
+                />
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="relative z-101 w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-xl">
+                  <div className="mb-4 text-xl font-semibold">
+                    Thanks for submitting!
+                  </div>
+                  <p className="text-muted-foreground mb-6">
+                    Your message has been sent successfully. I will get back to
+                    you soon.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setShowModal(false)}
+                    className="w-full px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
+                    Close
+                  </button>
+                </motion.div>
+              </div>
+            )}
           </motion.div>
 
           {/* Social Links */}
