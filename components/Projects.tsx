@@ -72,7 +72,7 @@ export default function Projects() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}>
                     <ExternalLink className="w-4 h-4" />
-                    Демо
+                    URL
                   </motion.a>
                 )}
               </div>
