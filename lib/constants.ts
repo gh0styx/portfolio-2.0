@@ -17,7 +17,7 @@ export const HERO_DATA = {
   ctaText: "Learn more",
   cvDownload: {
     text: "Download CV",
-    href: "/cv-oleksii-chermalykh.pdf",
+    href: "/cv-Oleksii-Chermalykh.pdf",
   },
 };
 
