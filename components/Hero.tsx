@@ -1,121 +1,114 @@
 "use client";
 
-import { motion } from "framer-motion";
-import {
-  ArrowDown,
-  Github,
-  Linkedin,
-  Mail,
-  Briefcase,
-  Download,
-} from "lucide-react";
-import { HERO_DATA, CONTACT_DATA } from "@/lib/constants";
+import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { ArrowDown } from "lucide-react";
+import { HERO_DATA } from "@/lib/constants";
+import { useEffect, useState } from "react";
 
 export default function Hero() {
-  const scrollToSection = (id: string) => {
-    const element = document.querySelector(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  const [mounted, setMounted] = useState(false);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Smooth springs for 3d effect
+  const springConfig = { damping: 25, stiffness: 200, mass: 0.5 };
+  const smoothX = useSpring(mouseX, springConfig);
+  const smoothY = useSpring(mouseY, springConfig);
+
+  const rotateX = useTransform(smoothY, [-0.5, 0.5], [10, -10]);
+  const rotateY = useTransform(smoothX, [-0.5, 0.5], [-10, 10]);
+
+  useEffect(() => {
+    setMounted(true);
+    const handleMouseMove = (e: MouseEvent) => {
+      const { innerWidth, innerHeight } = window;
+      const x = e.clientX / innerWidth - 0.5;
+      const y = e.clientY / innerHeight - 0.5;
+      mouseX.set(x);
+      mouseY.set(y);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mouseX, mouseY]);
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 bg-background">
-      <div className="container mx-auto max-w-4xl text-center relative z-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}>
-          <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-linear-to-r from-foreground to-muted-foreground bg-clip-text text-transparent"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}>
-            {HERO_DATA.title}
-          </motion.h1>
+      className="relative min-h-screen w-full flex flex-col justify-between overflow-hidden bg-background">
+      
+      {/* Dynamic Blob Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/40 rounded-full mix-blend-screen filter blur-[100px] opacity-80 animate-blob" />
+        <div className="absolute top-[20%] right-[-10%] w-[60%] h-[60%] bg-orange-600/40 rounded-full mix-blend-screen filter blur-[120px] opacity-80 animate-blob animation-delay-2000" />
+        <div className="absolute bottom-[-20%] left-[20%] w-[50%] h-[50%] bg-red-600/40 rounded-full mix-blend-screen filter blur-[100px] opacity-80 animate-blob animation-delay-4000" />
+        <div className="absolute bottom-[-10%] right-[10%] w-[40%] h-[40%] bg-cyan-600/30 rounded-full mix-blend-screen filter blur-[90px] opacity-70 animate-blob" />
+      </div>
 
-          <motion.p
-            className="text-lg sm:text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}>
-            {HERO_DATA.subtitle}
-          </motion.p>
-
+      <div className="flex-1 flex items-center justify-center relative z-10 px-4">
+        {mounted && (
           <motion.div
-            className="flex flex-wrap items-center justify-center gap-4 mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}>
-            {CONTACT_DATA.socialLinks.map((link) => {
-              const Icon =
-                link.icon === "Github"
-                  ? Github
-                  : link.icon === "Linkedin"
-                  ? Linkedin
-                  : link.icon === "Upwork"
-                  ? Briefcase
-                  : Mail;
-              return (
-                <motion.a
-                  key={link.name}
-                  href={link.href}
-                  target={link.href.startsWith("http") ? "_blank" : undefined}
-                  rel={
-                    link.href.startsWith("http")
-                      ? "noopener noreferrer"
-                      : undefined
-                  }
-                  className="p-3 rounded-full border border-border hover:bg-accent transition-colors"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}>
-                  <Icon className="w-5 h-5" />
-                </motion.a>
-              );
-            })}
+            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+            className="text-center w-full max-w-5xl">
+            <motion.h1
+              className="text-5xl sm:text-7xl md:text-8xl lg:text-[7rem] font-bold tracking-tight text-white leading-[1.1] md:leading-[1]"
+              style={{ transform: "translateZ(50px)" }}>
+              Oleksii<br />
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-white to-white/60">Chermalykh</span>
+            </motion.h1>
+            <motion.div
+              style={{ transform: "translateZ(30px)" }}
+              className="mt-8 flex flex-col items-center gap-8">
+              <p className="text-lg md:text-xl text-white/70 max-w-xl mx-auto">
+                {HERO_DATA.subtitle}
+              </p>
+              
+              <motion.a
+                 href={HERO_DATA.cvDownload.href}
+                 download
+                 className="relative inline-flex items-center px-8 py-4 bg-white/5 backdrop-blur-md border border-white/20 rounded-full text-[11px] font-bold tracking-widest uppercase text-white hover:bg-white/10 hover:border-white/40 transition-colors group overflow-hidden"
+                 whileHover={{ scale: 1.05 }}
+                 whileTap={{ scale: 0.98 }}
+              >
+                 <div className="absolute inset-0 bg-linear-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                 <span className="relative z-10">{HERO_DATA.cvDownload.text}</span>
+              </motion.a>
+            </motion.div>
           </motion.div>
+        )}
+      </div>
 
-          <motion.div
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}>
-            <motion.button
-              onClick={() => scrollToSection("#about")}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-full font-medium hover:opacity-90 transition-opacity"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}>
-              {HERO_DATA.ctaText}
-              <ArrowDown className="w-4 h-4" />
-            </motion.button>
+      {/* Footer Info Matching Monopo Style */}
+      <div className="relative z-10 w-full px-4 sm:px-8 pb-8 text-[11px] font-medium tracking-widest uppercase text-white/50 flex flex-col md:flex-row justify-between items-end gap-6 md:gap-0">
+        <div className="flex items-center gap-4 hidden md:flex">
+          <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-white">
+            G
+          </div>
+        </div>
+        
+        <div className="flex-1 flex flex-col md:grid md:grid-cols-3 max-w-4xl mx-auto gap-6 md:gap-8 w-full md:text-left text-center">
+          <div>
+            <span className="text-white block mb-1">Based in Odesa</span>
+            Born in Ukraine
+          </div>
+          <div>
+            <span className="text-white block mb-1">Design-driven</span>
+            Frontend Engineer
+          </div>
+          <div>
+            <span className="text-white block mb-1">Creative logic</span>
+            and robust functionality
+          </div>
+        </div>
 
-            <motion.a
-              href={HERO_DATA.cvDownload.href}
-              download
-              className="inline-flex items-center gap-2 px-8 py-4 border border-border text-foreground rounded-full font-medium hover:bg-accent transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}>
-              <Download className="w-4 h-4" />
-              {HERO_DATA.cvDownload.text}
-            </motion.a>
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          className="mt-20"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1 }}>
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="flex justify-center">
-            <ArrowDown className="w-6 h-6 text-muted-foreground" />
-          </motion.div>
+        <motion.div 
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="md:border-l md:border-white/20 md:pl-6 hidden md:block">
+          <ArrowDown className="w-5 h-5 text-white/70" />
         </motion.div>
       </div>
     </section>
   );
 }
+

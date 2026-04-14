@@ -14,41 +14,55 @@ export default function Skills() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.02,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
+    hidden: { opacity: 0, y: 10, scale: 0.95 },
+    visible: { opacity: 1, y: 0, scale: 1 },
   };
 
   return (
-    <section id="skills" ref={ref} className="py-20 px-4 sm:px-6 lg:px-8">
-      <div className="container mx-auto max-w-4xl">
-        <motion.h2
-          className="text-3xl sm:text-4xl md:text-5xl font-bold mb-12 text-center"
+    <section id="skills" ref={ref} className="py-32 px-4 sm:px-6 lg:px-8 relative z-10 bg-background overflow-hidden">
+      
+      {/* Background Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/10 rounded-full mix-blend-screen filter blur-[150px] pointer-events-none" />
+
+      <div className="container mx-auto max-w-5xl relative z-10">
+        <motion.div
+          className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: ANIMATION_CONFIG.duration }}>
-          {SKILLS_DATA.title}
-        </motion.h2>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 tracking-tight text-white/90">
+            {SKILLS_DATA.title}
+          </h2>
+          <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto font-light leading-relaxed">
+            Technologies and tools I work with
+          </p>
+        </motion.div>
 
         <motion.div
-          className="flex flex-wrap justify-center gap-4"
+          className="flex flex-wrap justify-center gap-3 lg:gap-4 max-w-4xl mx-auto"
           variants={containerVariants}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}>
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}>
           {SKILLS_DATA.skills.map((skill) => (
-            <motion.span
+            <motion.div
               key={skill}
               variants={itemVariants}
-              className="inline-flex items-center px-6 py-3 bg-linear-to-r from-primary/10 to-primary/5 border border-primary/20 rounded-full text-base font-medium text-foreground hover:from-primary/20 hover:to-primary/10 hover:border-primary/30 transition-all duration-200 cursor-default"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}>
-              {skill}
-            </motion.span>
+              className="relative"
+              style={{ perspective: 1000 }}>
+              
+              <motion.span
+                className="relative inline-flex items-center px-4 py-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-lg text-[11px] sm:text-xs font-bold tracking-widest uppercase text-white/70 transition-all duration-300 cursor-default shadow-sm"
+                >
+                {skill}
+              </motion.span>
+            </motion.div>
           ))}
         </motion.div>
       </div>

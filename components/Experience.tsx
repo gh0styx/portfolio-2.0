@@ -1,231 +1,109 @@
 "use client";
 
-import { motion, useInView, useScroll } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { EXPERIENCE_DATA, ANIMATION_CONFIG } from "@/lib/constants";
-import { Briefcase, GraduationCap, Code, ChevronRight } from "lucide-react";
 
-const getIcon = (type: string) => {
-  switch (type) {
-    case "work":
-      return Briefcase;
-    case "education":
-      return GraduationCap;
-    case "project":
-      return Code;
-    default:
-      return Briefcase;
-  }
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15 },
+  },
 };
 
-const getTypeColor = (type: string) => {
-  switch (type) {
-    case "work":
-      return "bg-blue-500";
-    case "education":
-      return "bg-green-500";
-    case "project":
-      return "bg-purple-500";
-    default:
-      return "bg-gray-500";
-  }
-};
-
-const getSectionIcon = (sectionTitle: string) => {
-  switch (sectionTitle) {
-    case "Work Experience":
-      return Briefcase;
-    case "Education":
-      return GraduationCap;
-    default:
-      return Code;
-  }
-};
-
-const getSectionColor = (sectionTitle: string) => {
-  switch (sectionTitle) {
-    case "Work Experience":
-      return "from-blue-500/20 to-blue-600/10";
-    case "Education":
-      return "from-green-500/20 to-green-600/10";
-    default:
-      return "from-purple-500/20 to-purple-600/10";
-  }
+const itemVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] } },
 };
 
 export default function Experience() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  const [visibleSections, setVisibleSections] = useState<{
-    [key: string]: number;
-  }>({});
-
-  // Card appearance on scroll for each section
-  useEffect(() => {
-    const unsubscribe = scrollYProgress.on("change", (latest: number) => {
-      const newVisibleSections: { [key: string]: number } = {};
-
-      EXPERIENCE_DATA.sections.forEach((section, sectionIndex) => {
-        const totalCards = section.items.length;
-
-        // Much simpler logic - show all cards when section is in view
-        const sectionStart = sectionIndex * 0.4; // 0, 0.4, 0.8
-
-        let visibleCount = 0;
-        if (latest >= sectionStart) {
-          // Show all cards in this section when it comes into view
-          visibleCount = totalCards;
-        }
-
-        newVisibleSections[section.title] = visibleCount;
-      });
-
-      setVisibleSections(newVisibleSections);
-    });
-
-    return () => unsubscribe();
-  }, [scrollYProgress]);
-
   return (
     <section
       id="experience"
-      ref={ref}
-      className="py-32 px-4 sm:px-6 lg:px-8 bg-muted/30 min-h-screen">
-      <div className="container mx-auto max-w-6xl">
+      className="py-32 px-4 sm:px-6 lg:px-8 bg-background relative z-10 w-full">
+        
+      {/* Background Glows */}
+      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full mix-blend-screen filter blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-purple-600/5 rounded-full mix-blend-screen filter blur-[100px] pointer-events-none" />
+
+      <div className="container mx-auto max-w-5xl relative z-10">
         <motion.div
-          className="text-center mb-24"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: ANIMATION_CONFIG.duration }}>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
+          className="mb-24"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={itemVariants}>
+          <h2 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-white/90">
             {EXPERIENCE_DATA.title}
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-white/50 max-w-2xl font-light leading-relaxed">
             {EXPERIENCE_DATA.subtitle}
           </p>
         </motion.div>
 
-        <div className="space-y-20">
-          {EXPERIENCE_DATA.sections.map((section, sectionIndex) => {
-            const SectionIcon = getSectionIcon(section.title);
-            const sectionColor = getSectionColor(section.title);
-            const visibleCards = visibleSections[section.title] || 0;
+        <div className="space-y-32">
+          {EXPERIENCE_DATA.sections.map((section) => (
+            <motion.div
+              key={section.title}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={containerVariants}
+              className="relative">
+                
+              {/* Section Header */}
+              <motion.h3 
+                variants={itemVariants}
+                className="text-3xl font-bold tracking-tight text-white mb-16 flex items-center gap-4">
+                {section.title}
+                <span className="text-sm font-medium tracking-widest uppercase text-white/30 px-3 py-1 border border-white/10 rounded-full">
+                  {section.items.length}
+                </span>
+              </motion.h3>
 
-            return (
-              <motion.div
-                key={section.title}
-                className="relative"
-                initial={{ opacity: 0, y: 30 }}
-                animate={
-                  isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
-                }
-                transition={{
-                  duration: ANIMATION_CONFIG.duration,
-                  delay: sectionIndex * 0.3,
-                }}>
-                {/* Section Header */}
-                <div
-                  className={`relative mb-12 p-6 rounded-2xl bg-linear-to-r ${sectionColor} border border-border/50`}>
-                  <div className="flex items-center gap-4">
-                    <div className="p-3 bg-primary/10 rounded-xl">
-                      <SectionIcon className="w-6 h-6 text-primary" />
-                    </div>
+              {/* Section Items */}
+              <div className="flex flex-col">
+                {section.items.map((item) => (
+                  <motion.div
+                    key={item.id}
+                    variants={itemVariants}
+                    className="border-t border-white/10 py-12 first:border-t-0 grid grid-cols-1 lg:grid-cols-[1fr_3fr] gap-8 lg:gap-16 transition-colors">
+                    
+                    {/* Left Column: Period & Company */}
                     <div>
-                      <h3 className="text-2xl font-bold text-foreground">
-                        {section.title}
-                      </h3>
-                      <div className="flex items-center gap-2 mt-1">
-                        <div className="h-1 w-8 bg-primary rounded-full" />
-                        <ChevronRight className="w-4 h-4 text-muted-foreground" />
-                        <span className="text-sm text-muted-foreground">
-                          {section.items.length}{" "}
-                          {section.items.length === 1 ? "item" : "items"}
-                        </span>
+                      <div className="text-sm font-medium tracking-widest uppercase text-white/40 mb-2">
+                        {item.period}
+                      </div>
+                      <div className="text-lg text-white/80 font-medium">
+                        {item.company}
                       </div>
                     </div>
-                  </div>
-                </div>
 
-                {/* Section Items */}
-                <div className="space-y-8">
-                  {section.items.map((item, itemIndex) => {
-                    const Icon = getIcon(item.type);
-                    const isVisible = itemIndex < visibleCards;
+                    {/* Right Column: Details */}
+                    <div>
+                      <h4 className="text-2xl md:text-3xl font-bold tracking-tight text-white/90 mb-6 transition-colors flex items-center gap-3">
+                        {item.title}
+                      </h4>
+                      
+                      <p className="text-base md:text-lg font-light text-white/60 mb-8 leading-relaxed max-w-3xl">
+                        {item.description}
+                      </p>
 
-                    return (
-                      <motion.div
-                        key={item.id}
-                        className="relative"
-                        initial={{ opacity: 0, y: 50 }}
-                        animate={
-                          isVisible
-                            ? { opacity: 1, y: 0 }
-                            : { opacity: 0, y: 50 }
-                        }
-                        transition={{
-                          duration: 0.6,
-                          delay: itemIndex * 0.2,
-                        }}>
-                        <div className="bg-card border border-border rounded-xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:border-primary/20">
-                          {/* Header and icon */}
-                          <div className="flex items-start gap-4 mb-6">
-                            <div
-                              className={`p-3 rounded-xl ${getTypeColor(
-                                item.type
-                              )} text-white`}>
-                              <Icon className="w-5 h-5" />
-                            </div>
-                            <div className="flex-1">
-                              <h4 className="text-xl font-bold text-foreground mb-1">
-                                {item.title}
-                              </h4>
-                              <p className="text-base text-muted-foreground font-medium">
-                                {item.company}
-                              </p>
-                              <p className="text-sm text-muted-foreground mt-2">
-                                {item.period}
-                              </p>
-                            </div>
-                          </div>
-
-                          {/* Description */}
-                          <p className="text-base text-muted-foreground mb-6 leading-relaxed">
-                            {item.description}
-                          </p>
-
-                          {/* Skills */}
-                          <div className="flex flex-wrap gap-4">
-                            {item.skills.map((skill) => (
-                              <motion.span
-                                key={skill}
-                                className="text-base px-4 py-3 bg-muted rounded-full font-medium hover:bg-primary/10 transition-colors"
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={
-                                  isVisible
-                                    ? { opacity: 1, scale: 1 }
-                                    : { opacity: 0, scale: 0.8 }
-                                }
-                                transition={{
-                                  duration: 0.3,
-                                  delay: itemIndex * 0.1 + 0.5,
-                                }}>
-                                {skill}
-                              </motion.span>
-                            ))}
-                          </div>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </motion.div>
-            );
-          })}
+                      <div className="flex flex-wrap gap-2">
+                        {item.skills.map((skill) => (
+                          <span
+                            key={skill}
+                            className="text-[11px] px-3 py-1.5 bg-white/5 border border-white/5 rounded-md font-medium tracking-widest uppercase text-white/40 transition-colors">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

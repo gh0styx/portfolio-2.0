@@ -14,17 +14,17 @@ export default function Projects() {
     <section
       id="projects"
       ref={ref}
-      className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+      className="py-24 px-4 sm:px-6 lg:px-8 bg-background relative z-10">
       <div className="container mx-auto max-w-6xl">
         <motion.h2
-          className="text-3xl sm:text-4xl md:text-5xl font-bold mb-12 text-center"
+          className="text-4xl sm:text-5xl md:text-6xl font-bold mb-16 text-center tracking-tight text-white/90"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: ANIMATION_CONFIG.duration }}>
           {PROJECTS_DATA.title}
         </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {PROJECTS_DATA.projects.map((project, index) => (
             <motion.div
               key={project.title}
@@ -34,30 +34,37 @@ export default function Projects() {
                 duration: ANIMATION_CONFIG.duration,
                 delay: index * ANIMATION_CONFIG.stagger,
               }}
-              className="bg-card border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
-              <h3 className="text-xl font-bold mb-3">{project.title}</h3>
-              <p className="text-muted-foreground mb-4">
-                {project.description}
-              </p>
+              whileHover={{ y: -5 }}
+              className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 hover:bg-white/10 hover:border-white/20 transition-all duration-500 group flex flex-col justify-between h-full relative overflow-hidden">
+                
+              {/* Subtle gradient hover effect on cards */}
+              <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.tech.map((tech) => (
-                  <span
-                    key={tech}
-                    className="text-xs px-2 py-1 bg-muted rounded">
-                    {tech}
-                  </span>
-                ))}
+              <div>
+                <h3 className="text-2xl font-bold mb-4 tracking-wide text-white">{project.title}</h3>
+                <p className="text-white/60 mb-8 leading-relaxed font-light">
+                  {project.description}
+                </p>
+
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {project.tech.map((tech) => (
+                    <span
+                      key={tech}
+                      className="text-white/40 text-[10px] uppercase tracking-widest px-3 py-1.5 border border-white/10 rounded-full font-medium">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex gap-6 mt-auto">
                 {project.github && (
                   <motion.a
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-                    whileHover={{ scale: 1.05 }}
+                    className="flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-white/50 hover:text-white transition-colors"
+                    whileHover={{ x: 2 }}
                     whileTap={{ scale: 0.95 }}>
                     <Github className="w-4 h-4" />
                     GitHub
@@ -68,8 +75,8 @@ export default function Projects() {
                     href={project.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-                    whileHover={{ scale: 1.05 }}
+                    className="flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-white/50 hover:text-white transition-colors"
+                    whileHover={{ x: 2 }}
                     whileTap={{ scale: 0.95 }}>
                     <ExternalLink className="w-4 h-4" />
                     URL
@@ -83,3 +90,4 @@ export default function Projects() {
     </section>
   );
 }
+

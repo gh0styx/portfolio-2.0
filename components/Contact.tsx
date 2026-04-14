@@ -25,21 +25,18 @@ export default function Contact() {
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
 
-    // Name validation
     if (!formData.name.trim()) {
       newErrors.name = "Name is required";
     } else if (formData.name.trim().length < 2) {
       newErrors.name = "Name must be at least 2 characters";
     }
 
-    // Email validation
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address";
     }
 
-    // Message validation
     if (!formData.message.trim()) {
       newErrors.message = "Message is required";
     } else if (formData.message.trim().length < 10) {
@@ -78,7 +75,6 @@ export default function Contact() {
         setFormData({ name: "", email: "", message: "" });
         setErrors({});
         setShowModal(true);
-        // auto-close modal after 4s
         setTimeout(() => setShowModal(false), 4000);
       } else {
         setSubmitStatus("error");
@@ -99,7 +95,6 @@ export default function Contact() {
       [name]: value,
     });
 
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors({
         ...errors,
@@ -109,10 +104,14 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" ref={ref} className="py-20 px-4 sm:px-6 lg:px-8">
-      <div className="container mx-auto max-w-4xl">
+    <section id="contact" ref={ref} className="py-32 px-4 sm:px-6 lg:px-8 bg-background relative z-10 w-full overflow-hidden">
+      
+      {/* Background elements */}
+      <div className="absolute top-[20%] right-[-10%] w-[500px] h-[500px] bg-blue-600/10 rounded-full mix-blend-screen filter blur-[150px] pointer-events-none" />
+
+      <div className="container mx-auto max-w-6xl relative z-10">
         <motion.h2
-          className="text-3xl sm:text-4xl md:text-5xl font-bold mb-12 text-center"
+          className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 tracking-tight text-white/90 text-center"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: ANIMATION_CONFIG.duration }}>
@@ -120,7 +119,7 @@ export default function Contact() {
         </motion.h2>
 
         <motion.p
-          className="text-lg text-muted-foreground text-center mb-12 max-w-2xl mx-auto"
+          className="text-lg text-white/60 text-center mb-24 max-w-2xl mx-auto font-light"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{
@@ -130,34 +129,31 @@ export default function Contact() {
           {CONTACT_DATA.subtitle}
         </motion.p>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid lg:grid-cols-2 gap-16">
           {/* Contact Form */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{
               duration: ANIMATION_CONFIG.duration,
               delay: ANIMATION_CONFIG.delay * 2,
-            }}>
-            <h3 className="text-2xl font-bold mb-6">Send me a message</h3>
+            }}
+            className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 lg:p-12">
+            <h3 className="text-2xl font-bold mb-8 tracking-tight text-white/90">Send me a message</h3>
 
-            {/* Status Messages */}
             {submitStatus === "error" && (
-              <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-600">
-                ❌ Failed to send message. Please try again or contact me
-                directly.
+              <div className="mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 text-sm">
+                ❌ Failed to send message. Please try again or contact me directly.
               </div>
             )}
 
             <form
               ref={formRef}
               onSubmit={handleSubmit}
-              // stay on page; Vercel Forms captures POST
               method="POST"
               data-vercel="true"
               data-vercel-honeypot="bot-field"
               className="space-y-6">
-              {/* Vercel Forms: form name and honeypot */}
               <input type="hidden" name="formName" value="contact" />
               <input
                 type="text"
@@ -167,11 +163,12 @@ export default function Contact() {
                 className="hidden"
                 aria-hidden="true"
               />
+              
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium mb-2">
-                  Name *
+                  className="block text-xs font-medium tracking-widest uppercase text-white/50 mb-3 ml-1">
+                  Name
                 </label>
                 <input
                   type="text"
@@ -179,21 +176,21 @@ export default function Contact() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 bg-card border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
-                    errors.name ? "border-red-500" : "border-border"
+                  className={`w-full px-6 py-4 bg-white/5 border rounded-xl text-white placeholder-white/20 focus:ring-0 focus:border-white/50 transition-colors ${
+                    errors.name ? "border-red-500/50" : "border-white/10"
                   }`}
-                  placeholder="Your name"
+                  placeholder="Your Name"
                 />
                 {errors.name && (
-                  <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+                  <p className="mt-2 text-sm text-red-500/80 ml-1">{errors.name}</p>
                 )}
               </div>
 
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium mb-2">
-                  Email *
+                  className="block text-xs font-medium tracking-widest uppercase text-white/50 mb-3 ml-1">
+                  Email
                 </label>
                 <input
                   type="email"
@@ -201,21 +198,21 @@ export default function Contact() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 bg-card border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
-                    errors.email ? "border-red-500" : "border-border"
+                  className={`w-full px-6 py-4 bg-white/5 border rounded-xl text-white placeholder-white/20 focus:ring-0 focus:border-white/50 transition-colors ${
+                    errors.email ? "border-red-500/50" : "border-white/10"
                   }`}
-                  placeholder="your.email@example.com"
+                  placeholder="your@email.com"
                 />
                 {errors.email && (
-                  <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                  <p className="mt-2 text-sm text-red-500/80 ml-1">{errors.email}</p>
                 )}
               </div>
 
               <div>
                 <label
                   htmlFor="message"
-                  className="block text-sm font-medium mb-2">
-                  Message *
+                  className="block text-xs font-medium tracking-widest uppercase text-white/50 mb-3 ml-1">
+                  Message
                 </label>
                 <textarea
                   id="message"
@@ -223,58 +220,61 @@ export default function Contact() {
                   value={formData.message}
                   onChange={handleChange}
                   rows={5}
-                  className={`w-full px-4 py-3 bg-card border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors resize-none ${
-                    errors.message ? "border-red-500" : "border-border"
+                  className={`w-full px-6 py-4 bg-white/5 border rounded-xl text-white placeholder-white/20 focus:ring-0 focus:border-white/50 transition-colors resize-y min-h-[150px] max-h-[300px] ${
+                    errors.message ? "border-red-500/50" : "border-white/10"
                   }`}
-                  placeholder="Tell me about your project or just say hello!"
+                  placeholder="What's on your mind?"
                 />
                 {errors.message && (
-                  <p className="mt-1 text-sm text-red-500">{errors.message}</p>
+                  <p className="mt-2 text-sm text-red-500/80 ml-1">{errors.message}</p>
                 )}
               </div>
 
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-3 px-8 py-5 bg-white text-black rounded-xl font-bold tracking-wide hover:bg-white/90 transition-colors mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}>
                 {isSubmitting ? (
                   <>
-                    <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
+                    <div className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full animate-spin" />
                     Sending...
                   </>
                 ) : (
                   <>
-                    <Send className="w-4 h-4" />
+                    <Send className="w-5 h-5" />
                     Send Message
                   </>
                 )}
               </motion.button>
             </form>
+
             {/* Success Modal */}
             {showModal && (
               <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
                 <div
-                  className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+                  className="absolute inset-0 bg-background/80 backdrop-blur-md"
                   onClick={() => setShowModal(false)}
                 />
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="relative z-101 w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-xl">
-                  <div className="mb-4 text-xl font-semibold">
-                    Thanks for submitting!
+                  className="relative z-101 w-full max-w-md rounded-3xl border border-white/10 bg-background p-8 shadow-2xl text-center">
+                  <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <Send className="w-8 h-8 text-white" />
                   </div>
-                  <p className="text-muted-foreground mb-6">
-                    Your message has been sent successfully. I will get back to
-                    you soon.
+                  <div className="mb-4 text-2xl font-bold text-white tracking-tight">
+                    Message Sent
+                  </div>
+                  <p className="text-white/60 font-light mb-8">
+                    Thanks for reaching out! I will get back to you as soon as possible.
                   </p>
                   <button
                     type="button"
                     onClick={() => setShowModal(false)}
-                    className="w-full px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
+                    className="w-full px-6 py-4 rounded-xl bg-white/10 text-white font-medium hover:bg-white/20 transition-colors">
                     Close
                   </button>
                 </motion.div>
@@ -284,14 +284,15 @@ export default function Contact() {
 
           {/* Social Links */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{
               duration: ANIMATION_CONFIG.duration,
               delay: ANIMATION_CONFIG.delay * 3,
-            }}>
-            <h3 className="text-2xl font-bold mb-6">Or reach out directly</h3>
-            <div className="space-y-4">
+            }}
+            className="flex flex-col justify-center h-full">
+            <h3 className="text-2xl font-bold mb-8 tracking-tight text-white/90">Connections</h3>
+            <div className="grid gap-4">
               {CONTACT_DATA.socialLinks.map((link) => {
                 const Icon =
                   link.icon === "Github"
@@ -311,11 +312,18 @@ export default function Contact() {
                         ? "noopener noreferrer"
                         : undefined
                     }
-                    className="flex items-center gap-4 p-4 bg-card border border-border rounded-lg hover:bg-accent transition-colors"
-                    whileHover={{ scale: 1.02 }}
+                    className="flex justify-between items-center p-6 bg-white/5 border border-white/5 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all duration-300 group"
+                    whileHover={{ scale: 1.02, x: 5 }}
                     whileTap={{ scale: 0.98 }}>
-                    <Icon className="w-6 h-6" />
-                    <span className="font-medium">{link.name}</span>
+                    <div className="flex items-center gap-4">
+                      <div className="p-3 bg-white/5 rounded-xl text-white">
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <span className="font-semibold text-lg text-white/90 tracking-wide">{link.name}</span>
+                    </div>
+                    <div className="text-sm font-medium tracking-widest uppercase text-white/30 group-hover:text-white/70 transition-colors">
+                      Connect
+                    </div>
                   </motion.a>
                 );
               })}
