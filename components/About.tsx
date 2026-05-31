@@ -58,20 +58,23 @@ export default function About() {
           {/* Stats */}
           <motion.div
             variants={itemVariants}
-            className="grid grid-cols-2 gap-6 place-content-center">
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4 place-content-center">
             {ABOUT_DATA.stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
-                className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 text-center hover:bg-white/10 transition-colors group relative overflow-hidden"
+                className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 text-left hover:bg-white/10 transition-colors group relative overflow-hidden min-h-[170px] flex flex-col justify-between"
                 whileHover={{ scale: 1.02 }}
                 transition={{ delay: index * 0.1 }}>
                 <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="relative z-10">
-                  <div className="text-4xl md:text-5xl font-bold text-white mb-2 tracking-tighter">
+                  <div className="text-xs font-medium tracking-widest uppercase text-white/45 mb-5">
+                    {stat.label}
+                  </div>
+                  <div className="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tighter leading-none">
                     {stat.value}
                   </div>
-                  <div className="text-sm font-medium tracking-widest uppercase text-white/50">
-                    {stat.label}
+                  <div className="text-sm leading-relaxed text-white/55 font-light">
+                    {stat.description}
                   </div>
                 </div>
               </motion.div>

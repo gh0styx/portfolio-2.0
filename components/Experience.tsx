@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, Variants } from "framer-motion";
-import { EXPERIENCE_DATA, ANIMATION_CONFIG } from "@/lib/constants";
+import { EXPERIENCE_DATA } from "@/lib/constants";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },

@@ -58,7 +58,8 @@ export default function Skills() {
               style={{ perspective: 1000 }}>
               
               <motion.span
-                className="relative inline-flex items-center px-4 py-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-lg text-[11px] sm:text-xs font-bold tracking-widest uppercase text-white/70 transition-all duration-300 cursor-default shadow-sm"
+                className="relative inline-flex items-center px-4 py-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-lg text-[11px] sm:text-xs font-bold tracking-widest uppercase text-white/70 transition-all duration-300 cursor-default shadow-sm hover:bg-white/10 hover:border-white/20 hover:text-white/90 hover:shadow-[0_0_20px_rgba(100,100,255,0.15)]"
+                whileHover={{ scale: 1.05, y: -2 }}
                 >
                 {skill}
               </motion.span>
