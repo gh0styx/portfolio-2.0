@@ -42,10 +42,10 @@ export const ABOUT_DATA = {
 			description: "Frontend, backend, API integration and production fixes",
 		},
 		{
-			label: "UI Systems",
-			value: "Dashboards",
+			label: "Product UI",
+			value: "Dashboards & Forms",
 			description:
-				"Reusable components, forms, admin panels and responsive flows",
+				"Reusable components, admin panels and responsive interfaces",
 		},
 		{
 			label: "Backend Work",
