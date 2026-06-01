@@ -23,8 +23,8 @@ export default function Experience() {
       className="py-32 px-4 sm:px-6 lg:px-8 bg-background relative z-10 w-full">
         
       {/* Background Glows */}
-      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full mix-blend-screen filter blur-[120px] pointer-events-none" />
-      <div className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-purple-600/5 rounded-full mix-blend-screen filter blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-white/2 rounded-full mix-blend-screen filter blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-white/2 rounded-full mix-blend-screen filter blur-[100px] pointer-events-none" />
 
       <div className="container mx-auto max-w-5xl relative z-10">
         <motion.div

@@ -107,7 +107,7 @@ export default function Contact() {
     <section id="contact" ref={ref} className="py-32 px-4 sm:px-6 lg:px-8 bg-background relative z-10 w-full overflow-hidden">
       
       {/* Background elements */}
-      <div className="absolute top-[20%] right-[-10%] w-[500px] h-[500px] bg-blue-600/10 rounded-full mix-blend-screen filter blur-[150px] pointer-events-none" />
+      <div className="absolute top-[20%] right-[-10%] w-[500px] h-[500px] bg-white/2 rounded-full mix-blend-screen filter blur-[150px] pointer-events-none" />
 
       <div className="container mx-auto max-w-6xl relative z-10">
         <motion.h2
@@ -176,8 +176,8 @@ export default function Contact() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className={`w-full px-6 py-4 bg-white/5 border rounded-xl text-white placeholder-white/20 focus:ring-0 focus:border-white/50 transition-colors ${
-                    errors.name ? "border-red-500/50" : "border-white/10"
+                  className={`w-full px-6 py-4 bg-white/[0.03] border rounded-xl text-white placeholder-white/25 focus:outline-hidden focus:bg-white/[0.06] focus:border-white/30 focus:shadow-[0_0_20px_rgba(255,255,255,0.02)] transition-all duration-300 ${
+                    errors.name ? "border-red-500/40" : "border-white/8"
                   }`}
                   placeholder="Your Name"
                 />
@@ -198,8 +198,8 @@ export default function Contact() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`w-full px-6 py-4 bg-white/5 border rounded-xl text-white placeholder-white/20 focus:ring-0 focus:border-white/50 transition-colors ${
-                    errors.email ? "border-red-500/50" : "border-white/10"
+                  className={`w-full px-6 py-4 bg-white/[0.03] border rounded-xl text-white placeholder-white/25 focus:outline-hidden focus:bg-white/[0.06] focus:border-white/30 focus:shadow-[0_0_20px_rgba(255,255,255,0.02)] transition-all duration-300 ${
+                    errors.email ? "border-red-500/40" : "border-white/8"
                   }`}
                   placeholder="your@email.com"
                 />
@@ -220,8 +220,8 @@ export default function Contact() {
                   value={formData.message}
                   onChange={handleChange}
                   rows={5}
-                  className={`w-full px-6 py-4 bg-white/5 border rounded-xl text-white placeholder-white/20 focus:ring-0 focus:border-white/50 transition-colors resize-y min-h-[150px] max-h-[300px] ${
-                    errors.message ? "border-red-500/50" : "border-white/10"
+                  className={`w-full px-6 py-4 bg-white/[0.03] border rounded-xl text-white placeholder-white/25 focus:outline-hidden focus:bg-white/[0.06] focus:border-white/30 focus:shadow-[0_0_20px_rgba(255,255,255,0.02)] transition-all duration-300 resize-y min-h-[150px] max-h-[300px] ${
+                    errors.message ? "border-red-500/40" : "border-white/8"
                   }`}
                   placeholder="What's on your mind?"
                 />
@@ -233,9 +233,9 @@ export default function Contact() {
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full flex items-center justify-center gap-3 px-8 py-5 bg-white text-black rounded-xl font-bold tracking-wide hover:bg-white/90 transition-colors mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}>
+                className="w-full flex items-center justify-center gap-3 px-8 py-5 bg-linear-to-b from-white to-zinc-300 hover:from-white hover:to-zinc-200 text-black border border-white/20 rounded-xl font-bold tracking-wide shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_4px_24px_rgba(0,0,0,0.5)] transition-all duration-300 mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
+                whileHover={{ scale: 1.015 }}
+                whileTap={{ scale: 0.985 }}>
                 {isSubmitting ? (
                   <>
                     <div className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full animate-spin" />
@@ -274,7 +274,7 @@ export default function Contact() {
                   <button
                     type="button"
                     onClick={() => setShowModal(false)}
-                    className="w-full px-6 py-4 rounded-xl bg-white/10 text-white font-medium hover:bg-white/20 transition-colors">
+                    className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-white font-medium hover:bg-white/10 hover:border-white/25 transition-all duration-300">
                     Close
                   </button>
                 </motion.div>

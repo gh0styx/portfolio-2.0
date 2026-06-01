@@ -108,7 +108,7 @@ function PlanetGlobe() {
     <group ref={groupRef} position={[0, GLOBE_Y, 0]}>
       <mesh>
         <sphereGeometry args={[GLOBE_RADIUS * 0.994, 96, 96]} />
-        <meshBasicMaterial color="#020006" />
+        <meshBasicMaterial color="#000000" />
       </mesh>
 
       <points>
@@ -117,9 +117,9 @@ function PlanetGlobe() {
         </bufferGeometry>
         <pointsMaterial
           size={0.015}
-          color="#5f4bff"
+          color="#3a4a6a"
           transparent
-          opacity={0.32}
+          opacity={0.28}
           sizeAttenuation
           depthWrite={false}
           blending={THREE.AdditiveBlending}
@@ -132,9 +132,9 @@ function PlanetGlobe() {
         </bufferGeometry>
         <pointsMaterial
           size={0.025}
-          color="#bf8cff"
+          color="#c8d0e0"
           transparent
-          opacity={0.86}
+          opacity={0.80}
           sizeAttenuation
           depthWrite={false}
           blending={THREE.AdditiveBlending}
@@ -176,7 +176,7 @@ function AtmosphereGlow() {
         depthWrite={false}
         blending={THREE.AdditiveBlending}
         uniforms={{
-          glowColor: { value: new THREE.Color("#8f36ff") },
+          glowColor: { value: new THREE.Color("#7090b8") },
         }}
         vertexShader={`
           varying float vIntensity;
@@ -212,9 +212,9 @@ function EquatorBloom() {
     <mesh ref={meshRef} position={[0.9, GLOBE_Y + 0.2, 0.18]} rotation={[0.24, -0.58, 0.08]}>
       <circleGeometry args={[1.05, 96]} />
       <meshBasicMaterial
-        color="#a855f7"
+        color="#a0b8d0"
         transparent
-        opacity={0.18}
+        opacity={0.08}
         depthWrite={false}
         blending={THREE.AdditiveBlending}
       />

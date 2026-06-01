@@ -65,7 +65,7 @@ export default function About() {
                 className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 text-left hover:bg-white/10 transition-colors group relative overflow-hidden min-h-[170px] flex flex-col justify-between"
                 whileHover={{ scale: 1.02 }}
                 transition={{ delay: index * 0.1 }}>
-                <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-linear-to-br from-white/6 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="relative z-10">
                   <div className="text-xs font-medium tracking-widest uppercase text-white/45 mb-5">
                     {stat.label}

@@ -2,36 +2,18 @@
 
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { NAVIGATION_CONFIG, NAVIGATION_ITEMS } from "@/lib/constants";
 
 export default function Navigation() {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-	const [currentTime, setCurrentTime] = useState("");
 
 	const { scrollY } = useScroll();
 
 	useMotionValueEvent(scrollY, "change", (latest) => {
 		setIsScrolled(latest > NAVIGATION_CONFIG.scrollThreshold);
 	});
-
-	useEffect(() => {
-		const p = () => {
-			const date = new Date();
-			setCurrentTime(
-				date.toLocaleTimeString("en-US", {
-					hour: "2-digit",
-					minute: "2-digit",
-					second: "2-digit",
-					hour12: true,
-				}),
-			);
-		};
-		p();
-		const inv = setInterval(p, 1000);
-		return () => clearInterval(inv);
-	}, []);
 
 	const handleNavClick = (href: string) => {
 		const element = document.querySelector(href);
@@ -52,23 +34,11 @@ export default function Navigation() {
 			}`}
 		>
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
-				<div className="flex items-start lg:items-center justify-between py-6">
-					<div className="flex items-center gap-4 text-sm font-medium tracking-wide">
-						<motion.a
-							href="#hero"
-							onClick={(e) => {
-								e.preventDefault();
-								handleNavClick("#hero");
-							}}
-							whileHover={{ opacity: 0.7 }}
-							className="font-bold flex gap-4"
-						>
-							<span>GH0STY</span>
-							<span className="text-white/50 font-normal">dev</span>
-						</motion.a>
-					</div>
+				<div className="flex items-center justify-between py-6">
+					{/* Spacer on the left to perfectly center desktop menu */}
+					<div className="hidden lg:block w-10" />
 
-					<div className="hidden lg:flex items-start justify-center gap-12 flex-1 pt-1">
+					<div className="hidden lg:flex items-center justify-center gap-12 flex-1 pt-1">
 						{NAVIGATION_ITEMS.map((item) => (
 							<motion.a
 								key={item.name}
@@ -86,13 +56,9 @@ export default function Navigation() {
 						))}
 					</div>
 
-					<div className="flex items-start gap-6 text-[11px] font-medium tracking-widest uppercase text-white/50">
-						<div className="hidden sm:block pt-1">
-							<span className="text-white">●</span> {currentTime || "00:00:00"}
-						</div>
-
+					<div className="flex items-center justify-end w-full lg:w-10">
 						<motion.button
-							className="relative -mt-2 p-2 max-lg:block lg:hidden group text-white hover:bg-white/10 rounded-lg transition-colors"
+							className="relative p-2 max-lg:block lg:hidden group text-white hover:bg-white/10 rounded-lg transition-colors"
 							onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
 							aria-label="Toggle menu"
 							whileHover={{ scale: 1.05 }}

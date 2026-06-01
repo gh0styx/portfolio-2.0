@@ -69,7 +69,7 @@ export default function Hero() {
 					>
 						{firstName}
 						<br />
-						<span className="text-transparent bg-clip-text bg-linear-to-r from-white to-white/60">
+						<span className="shimmer-text">
 							{lastName}
 						</span>
 					</motion.h1>
@@ -88,7 +88,7 @@ export default function Hero() {
 							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.98 }}
 						>
-							<div className="absolute inset-0 bg-linear-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+							<div className="absolute inset-0 bg-linear-to-r from-white/5 to-white/8 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 							<span className="relative z-10">{HERO_DATA.cvDownload.text}</span>
 						</motion.a>
 					</motion.div>

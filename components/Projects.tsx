@@ -26,7 +26,7 @@ function ProjectCard({ project, index, isInView }: {
     cardRef.current.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
     
     // Specular highlight follows cursor
-    glareRef.current.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255,255,255,0.15) 0%, transparent 60%)`;
+    glareRef.current.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255,255,255,0.12) 0%, transparent 60%)`;
     glareRef.current.style.opacity = "1";
   }, []);
 
@@ -60,8 +60,8 @@ function ProjectCard({ project, index, isInView }: {
         {/* Subtle gradient hover effect on cards */}
         <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-        {/* Edge glow */}
-        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none shadow-[inset_0_0_30px_rgba(100,130,255,0.08)]" />
+        {/* Edge glow — silver chrome */}
+        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none shadow-[inset_0_1px_0_rgba(255,255,255,0.12),inset_0_0_30px_rgba(200,210,230,0.04)]" />
 
         <div style={{ transform: "translateZ(20px)" }}>
           <h3 className="text-2xl font-bold mb-4 tracking-wide text-white">{project.title}</h3>

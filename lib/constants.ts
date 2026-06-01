@@ -145,61 +145,54 @@ export const PROJECTS_DATA = {
 	title: "Projects",
 	projects: [
 		{
-			title: "Wandry Product Platform",
+			title: "Codex",
 			description:
-				"Fullstack product features covering React and TypeScript frontend implementation, Node.js and Laravel backend logic, API integration, authentication flows, CRUD logic, and production fixes.",
-			tech: [
-				"React",
-				"TypeScript",
-				"Node.js",
-				"Laravel",
-				"PostgreSQL",
-				"MySQL",
-			],
+				"Modern web application built with cutting-edge technologies. A comprehensive platform featuring advanced functionality and responsive design.",
+			tech: ["React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+			demo: "https://codex.energy/",
 		},
 		{
-			title: "Dashboard UI Systems",
+			title: "Wandry-ui-kit",
 			description:
-				"Responsive dashboard screens, reusable UI components, form flows, API-connected frontend modules, and admin-facing functionality for production applications.",
+				"Custom UI component library designed for consistent and scalable design systems. Includes reusable components with comprehensive documentation.",
 			tech: [
 				"React",
 				"TypeScript",
+				"Storybook",
 				"Tailwind CSS",
-				"shadcn/ui",
+				"Framer Motion",
+				"Shadcn/ui",
+			],
+			github: "https://github.com/WandryDev/wandry-ui",
+			demo: "https://ui.wandry.com.ua/",
+		},
+		{
+			title: "CG site",
+			description:
+				"Corporate website for CG company featuring modern design, interactive elements, and optimized performance for better user experience.",
+			tech: ["SCSS", "TypeScript", "Framer Motion", "Vue.js", "Nuxt.js"],
+			demo: "https://crystaliaglass.com/",
+		},
+		{
+			title: "CG dealer",
+			description:
+				"Access only for dealers. Dealer management system with advanced features for inventory management, customer relations, and business analytics.",
+			tech: [
+				"React",
+				"Node.js",
+				"MongoDB",
+				"Express",
+				"TypeScript",
+				"Inertia.js",
 				"Radix UI",
-				"TanStack Query",
 			],
 		},
 		{
-			title: "NDA SaaS Client",
+			title: "Fernir.co",
 			description:
-				"Production frontend features with complex user interactions, server state, validation, loading and error states, performance fixes, and reduced unnecessary re-renders.",
-			tech: ["React", "Next.js", "TypeScript", "REST APIs", "Performance"],
-		},
-		{
-			title: "Fernir Web Applications",
-			description:
-				"Client-facing web application features with React, Vue.js, Node.js and Laravel, including responsive UI, client-side state management, REST API integrations, and deployment support.",
-			tech: [
-				"React",
-				"TypeScript",
-				"Vue.js",
-				"Node.js",
-				"Laravel",
-				"GitLab CI",
-			],
-		},
-		{
-			title: "Aura Digital Client Work",
-			description:
-				"Landing pages, dashboard screens, reusable UI components, REST API integrations, and cross-browser responsive layouts for client projects.",
-			tech: [
-				"JavaScript",
-				"React",
-				"Tailwind CSS",
-				"REST APIs",
-				"Responsive UI",
-			],
+				"Professional business website with modern design, responsive layout, and integrated contact forms. Built for optimal performance and SEO.",
+			tech: ["React", "JavaScript", "SCSS"],
+			demo: "https://fernir.co",
 		},
 	] as Project[],
 };
