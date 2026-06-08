@@ -166,6 +166,7 @@ export const PROJECTS_DATA = {
 			github: "https://github.com/WandryDev/wandry-ui",
 			demo: "https://ui.wandry.com.ua/",
 		},
+
 		{
 			title: "CG site",
 			description:
@@ -187,6 +188,28 @@ export const PROJECTS_DATA = {
 				"Radix UI",
 			],
 		},
+		{
+			title: "School CDL",
+			description:
+				"Training center website for CarDetailLab — practical detailing courses, instructor profiles, certification info, and enrollment flows for students in Odesa.",
+			tech: ["SCSS", "Blade", "JavaScript", "GSAP", "Framer Motion"],
+			demo: "https://school.cardetaillab.ua/",
+		},
+		{
+			title: "Shop CDL",
+			description:
+				"E-commerce platform for auto detailing supplies — catalog navigation, product listings, cart flows, and bilingual storefront for CarDetailLab.",
+			tech: ["SCSS", "Blade", "JavaScript", "GSAP", "Framer Motion"],
+			demo: "https://shop.cardetaillab.ua/",
+		},
+		{
+			title: "Blog CDL",
+			description:
+				"Content hub for CarDetailLab — article listings, topic filters, product reviews, and event coverage for the detailing community.",
+			tech: ["SCSS", "Blade", "JavaScript", "GSAP", "Framer Motion"],
+			demo: "https://blog.cardetaillab.ua/",
+		},
+
 		{
 			title: "Fernir.co",
 			description:
